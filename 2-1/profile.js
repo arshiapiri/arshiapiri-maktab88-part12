@@ -8,7 +8,7 @@ $(function () {
     const removeUserBtn = $("#removeUserBtn");
 
     removeUserBtn.on("click", function() {
-        removeUsers.push(userId);
+        addUserToRemoveList(userId);
     })
 
     const userProfileRenderer = () => {
@@ -31,7 +31,14 @@ $(function () {
               return response.json()
           }).then((body) => {
             userData = body.data;
-            userProfileRenderer();
+            if(removedUsers.includes(userId)) {
+              infoContainer.html(`
+              <p>User not found</p>
+              `);
+            }
+            else{
+              userProfileRenderer();
+            }
           }).catch((err) => {
             if (err.status === 404) {
               infoContainer.html(`

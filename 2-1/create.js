@@ -36,11 +36,11 @@ $(function () {
   const requestHandeler = () => {
     fetch(`https://reqres.in/api/users`,
       {
-        method: "get"
+        method: "post"
       }).then((response) => {
         return response.json()
       }).then((body) => {
-        lastId =+ body.total + 1;
+        lastId = body.total + 1;
         console.log(lastId)
       }).catch((err) => {
         console.log(err);
