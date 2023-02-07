@@ -5,6 +5,8 @@ $(function () {
   let perPage = null;
   let totalPages = null;
   let users = []
+  let presentedUser = []
+  let defaultUsers = []
   let searchValue;
 
   const cardGenerator = (user) => {
@@ -29,6 +31,13 @@ $(function () {
     for (const user of users) {
       if (removedUsers.includes(String(user.id))) continue;
       html += cardGenerator(user)
+    }
+    if(!!createdUsers && createdUsers.length !== 0 ){
+      for (const user of createdUsers) {
+        if (presentedUser.includes(String(user.id))) continue;
+        html += cardGenerator(user);
+        presentedUser.push(user.id)
+      }
     }
     cardContainer.html(html)
   }
@@ -68,15 +77,18 @@ $(function () {
 
   $("#searchForm").on("submit", function (e) {
     e.preventDefault()
-    searchValue = $("#searchInput").val();
+    searchValue = $("#searchInput").val().toLowerCase()
     if (!!searchValue?.trim()) {
-      users = users.filter(el =>
-        el.first_name.includes(searchValue) ||
-        el.last_name.includes(searchValue) ||
-        el.email.includes(searchValue)
+      users = defaultUsers.filter(
+        (el) =>
+        el.first_name.toLowerCase().includes(searchValue) ||
+        el.last_name.toLowerCase().includes(searchValue) ||
+        el.email.toLowerCase().includes(searchValue)
       )
-      cardsRender()
+    }else{
+      users = [...defaultUsers]
     }
+    cardsRender()
   })
   const requestHandeler = (page) => {
     fetch(`https://reqres.in/api/users?page=${page}`,
@@ -88,6 +100,7 @@ $(function () {
         perPage = body.per_page;
         totalPages = body.total_pages;
         users = [...body.data];
+        defaultUsers = [...body.data]
         cardsRender();
         paginationContentRenderer()
       }).catch((err) => {
