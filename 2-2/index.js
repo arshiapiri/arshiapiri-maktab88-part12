@@ -1,5 +1,6 @@
 //Here is first of changes
 
+const { error } = require("console");
 const fs = require("fs");
 const { resolve } = require("path");
 let directory = "./user-data.json";
@@ -30,7 +31,7 @@ let testUser = {
     "city": "Karaj",
     "postalCode": "3148634774",
     "phoneNumber": "34495832",
-    "position": "Back-End Developer"
+    "position": "Back-End Developer",
 }
 const template = [
     "uid",
@@ -72,6 +73,10 @@ const deleteUser = (id) => {
 
 //(C) Create
 const createUser = (newUser) => {
+    if(Object.keys(newUser).length !==template.length) throw new Error("length error!");
+    let keys = Object.keys(newUser);
+    if (keys.find((property) => !template.includes(property)))
+    throw new Error(`property is not valid`);
     readFilePromise(directory, "utf-8").then((data) => {
         let duplicate = data.find((user) => user.uid === newUser.uid);
         if (!!duplicate) {
@@ -114,4 +119,4 @@ const updateUser = (id, newUser) => {
 }
 
 
-deleteUser(123456)
+createUser(testUser)
