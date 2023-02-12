@@ -25,10 +25,10 @@ const writeFilePromise = (filePath, data, options) => {
 
 
 let testUser = {
-    "uid": 123456,
-    "firstname": "Hassan",
-    "lastname": "Karami",
-    "city": "Karaj",
+    "uid": 990011,
+    "firstname": "arshia",
+    "lastname": "piri",
+    "city": "tehran",
     "postalCode": "3148634774",
     "phoneNumber": "34495832",
     "position": "Back-End Developer",
@@ -119,4 +119,4 @@ const updateUser = (id, newUser) => {
 }
 
 
-createUser(testUser)
+// createUser(testUser)
