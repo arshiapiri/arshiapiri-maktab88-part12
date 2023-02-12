@@ -117,6 +117,3 @@ const updateUser = (id, newUser) => {
         .then(() => console.log(`user updated successfully `))
         .catch((err) => console.log(err));
 }
-
-
-// createUser(testUser)
